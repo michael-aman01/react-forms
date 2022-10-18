@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Message from "./components/Message";
 import PictureDisplay from "./components/PictureDisplay";
 
@@ -11,6 +11,41 @@ function App() {
   const [isBrown, setIsBrown] = useState(false);
   const [isLightBrown, setIsLightBrown] = useState(false);
   const [isYellow, setIsYellow] = useState(false);
+
+  useEffect(() => {
+    if(size === 's')setSize('small')
+    if(size === 'm')setSize('medium')
+    if(size === 'l')setSize('large')
+    if(size === 'xl')setSize('xlarge')
+
+  },[size])
+
+  useEffect(() => {
+    setFeatherCount(featherCount)
+    console.log(featherCount)
+  },[featherCount])
+  
+  useEffect(() => {
+    getFeatherArr(isRed)
+    getFeatherArr(isOrange)
+    getFeatherArr(isBrown)
+    getFeatherArr(isLightBrown)
+    getFeatherArr(isYellow)
+  },[isRed,isOrange,isBrown,isLightBrown,isYellow])
+
+  const getFeatherArr = () => {
+    let featherArr = []
+    if(isRed === true){featherArr.push("red")}
+    if(isOrange === true){featherArr.push("orange")}
+    if(isBrown === true){featherArr.push("brown")}
+    if(isLightBrown === true){featherArr.push("light-brown")}
+    if(isYellow === true){featherArr.push("yellow")}
+
+    console.log(featherArr)
+    setFeatherColors(featherArr)
+
+    return featherArr
+  }
 
   return (
     <>
@@ -66,7 +101,7 @@ function App() {
         featherCount={featherCount}
         featherColors={featherColors}
       />
-      <Message size={size} />
+      <Message size={size} featherCount={featherCount} />
     </>
   );
 }
